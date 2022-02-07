@@ -1,0 +1,20 @@
+{
+    "name": "@boschresearch/node-red-assets2036",
+    "version": "0.0.1",
+    "description": "nodes for providing an asset in conformance with assets2036",
+    "keywords": [],
+    "dependencies": {
+        "mqtt": "latest",
+        "jsonschema": "latest"
+    },
+    "node-red": {
+        "nodes": {
+            "AssetEvent": "Asset/AssetEvent.js",
+            "AssetProperty": "Asset/AssetProperty.js",
+            "AssetConfig": "Asset/AssetConfig.js",
+            "AssetOperationREQ": "Asset/AssetOperationREQ.js",
+            "AssetOperationRESP": "Asset/AssetOperationRESP.js",
+            "AssetRegister": "Asset/AssetRegister.js"
+        }
+    }
+}

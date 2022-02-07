@@ -1,0 +1,61 @@
+<script type="text/javascript">
+    RED.nodes.registerType('AssetOperationRESP', {
+        category: 'Tools',
+        color: '#8080cf',
+        defaults: {
+            asset: { value: "", type: "AssetConfig" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "font-awesome/fa-check",
+        label: function () {
+            var a = RED.nodes.node(this.asset);
+            return `RESP: (${a.assetName})` || "OperationREQ";
+        },
+        paletteLabel: "op RESP"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="AssetOperationRESP">
+    <div class="form-row">
+        <label for="node-input-asset"><i class="icon-tag"></i>Asset</label>
+        <input type="text" id="node-input-asset" placeholder="Asset">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="AssetOperationRESP">
+    <p>Operation response from an assets2036 asset</p>
+    <h3>Node properies</h3>
+    <dl class="message-properties">
+      <dt>Asset<span class="property-type">configuration</span></dt>
+      <dd> A configuration, dercribing the asset. See Configuration properies in the config node. 
+           It has to be same configuration as for the corresponding REQ node.
+      </dd>
+  
+      <dt>Name<span class="property-type">string</span></dt>
+      <dd> Becomes part of the nodes label. </dd>
+    </dl>
+  
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payloadobject <span class="property-type">object</span></dt>
+        <dd>The input of the node as object.</dd>
+
+        <dt>payloadobject.req_id <span class="property-type">string</span></dt>
+        <dd>The request id of the operation request, delivered by the corresponding REQ node. </dd>
+
+        <dt>payloadobject.resp <span class="property-type">object</span></dt>
+        <dd>The response of the operation, like it is specified in the submodel definition.</dd>
+
+        <dt>payloadobject.config <span class="property-type">object</span></dt>
+        <dd>Configuration info, delivered by the corresponding REQ node. </dd>
+
+        <dt>payloadobject.config.operation <span class="property-type">string</span></dt>
+        <dd>The operation name of the corresponding REQ node. </dd>
+    </dl>
+</script>

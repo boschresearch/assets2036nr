@@ -1,0 +1,75 @@
+<script type="text/javascript">
+    RED.nodes.registerType('AssetRegister', {
+        category: 'Tools',
+        color: '#a6bbcf',
+        defaults: {
+            asset: { value: "", type: "AssetConfig" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-paper-plane",
+        label: function () {
+            var a = RED.nodes.node(this.asset);
+            if (a) {
+                return `Register ${a.assetName}`;
+            }
+            return "Register asset";
+        },
+        paletteLabel: "register"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="AssetRegister">
+    <div class="form-row">
+        <label for="node-input-asset"><i class="icon-tag"></i>Asset</label>
+        <input type="text" id="node-input-asset" placeholder="Asset">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="AssetRegister">
+    <p>Register an new assets2036 asset</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>any event
+            <span class="property-type">void</span>
+        </dt>
+        <dd> Any event triggers the registration. </dd>
+    </dl>
+
+    <h3>Node properies</h3>
+    <dl class="message-properties">
+      <dt>Asset<span class="property-type">configuration</span></dt>
+      <dd> A configuration, dercribing the asset. See Configuration properies below. </dd>
+
+      <dt>Name<span class="property-type">string</span></dt>
+      <dd> The nodes label. </dd>
+    </dl>
+
+    <h3>Configuration properies</h3>
+    <dl class="message-properties">
+      <dt>BrokerIP<span class="property-type">string</span></dt>
+      <dd> IP of the assets2036 broker. </dd>
+
+      <dt>BrokerPort<span class="property-type">number</span></dt>
+      <dd> Port of the assets2036 broker. </dd>
+
+      <dt>Assetname<span class="property-type">string</span></dt>
+      <dd> The name of the asset to register . </dd>
+
+      <dt>Namespace<span class="property-type">string</span></dt>
+      <dd> The namespace (origin) of the asset. It becomes the assets root topic. </dd>
+
+      <dt>SubmodelURL<span class="property-type">string</span></dt>
+      <dd> The URL of the submodel stored in the submodel pool . </dd>
+
+      <dt>SubmodelDef<span class="property-type">JSON string</span></dt>
+      <dd> The whole submodel as a JSON string. </dd>
+    </dl>
+
+</script>

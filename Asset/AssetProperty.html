@@ -1,0 +1,72 @@
+<script type="text/javascript">
+    RED.nodes.registerType('AssetProperty', {
+        category: 'Tools',
+        color: '#dfdf80',
+        defaults: {
+            asset: { value: "", type: "AssetConfig" },
+            property: { value: "", required: true },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "font-awesome/fa-bar-chart",
+        label: function () {
+            var a = RED.nodes.node(this.asset);
+            return `(${a.assetName}): ${this.property}` || "Property";
+        },
+        paletteLabel: "property",
+        oneditprepare: function(){
+            var a = RED.nodes.node(this.asset);
+            submodelObj = JSON.parse(a.submodelDef);
+            for (property in submodelObj.properties){
+                $('#node-input-property').append($('<option>', {
+                    value: property,
+                    text: property
+                }));
+            }
+        }
+
+    });
+</script>
+
+<script type="text/x-red" data-template-name="AssetProperty">
+    <div class="form-row">
+        <label for="node-input-asset"><i class="icon-tag"></i>Asset</label>
+        <input type="text" id="node-input-asset" placeholder="Asset">
+    </div>
+    <div class="form-row">
+        <label for="node-input-property"><i class="icon-tag"></i>Property</label>
+        <select id="node-input-property" placeholder="Property">
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="AssetProperty">
+    <p>Property of an assets2036 asset</p>
+    <h3>Node properies</h3>
+    <dl class="message-properties">
+      <dt>Asset<span class="property-type">configuration</span></dt>
+      <dd> A configuration, dercribing the asset. See Configuration properies in the config node. 
+           It has to be same configuration as for the corresponding REQ node.
+      </dd>
+  
+      <dt>Property<span class="property-type">string</span></dt>
+      <dd> One of the properies, specified in the submodel definition. If this field doesn't 
+        match with any operation within the submodel, the node reports a connection 
+        error on its bottom. 
+      </dd>
+
+      <dt>Name<span class="property-type">string</span></dt>
+      <dd> Becomes part of the nodes label. </dd>
+    </dl>
+  
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt>
+        <dd> The properties, specified in the submodel definition. </dd>
+     </dl>
+</script>

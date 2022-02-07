@@ -1,0 +1,76 @@
+<script type="text/javascript">
+    RED.nodes.registerType('AssetEvent', {
+        category: 'Tools',
+        color: '#cf8080',
+        defaults: {
+            asset: { value: "", type: "AssetConfig" },
+            event: { value: "", required: true },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "font-awesome/fa-bell",
+        label: function () {
+            var a = RED.nodes.node(this.asset);
+            return a ? `(${a.assetName}): ${this.event}` : "Event";
+        },
+        paletteLabel: "event",
+        oneditprepare: function () {
+            var a = RED.nodes.node(this.asset);
+            if (a) {
+                submodelObj = JSON.parse(a.submodelDef);
+                let select = $('#node-input-event');
+                select.empty();
+                for (event in submodelObj.events) {
+                    select.append($('<option>', {
+                        value: event,
+                        text: event
+                    }));
+                }
+            }
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="AssetEvent">
+    <div class="form-row">
+        <label for="node-input-asset"><i class="icon-tag"></i>Asset</label>
+        <input type="text" id="node-input-asset" placeholder="Asset">
+    </div>
+    <div class="form-row">
+        <label for="node-input-event"><i class="icon-tag"></i>Event</label>
+        <select id="node-input-event" placeholder="Event">
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="AssetEvent">
+    <p>Event fired by an assets2036 asset</p>
+    <h3>Node properies</h3>
+    <dl class="message-properties">
+      <dt>Asset<span class="property-type">configuration</span></dt>
+      <dd> A configuration, dercribing the asset. See Configuration properies in the config node. 
+           It has to be same configuration as for the corresponding REQ node.
+      </dd>
+  
+      <dt>Event<span class="property-type">string</span></dt>
+      <dd> One of the events to be fired, specified in the submodel definition. If this field doesn't 
+        match with any operation within the submodel, the node reports a connection 
+        error on its bottom. 
+      </dd>
+
+      <dt>Name<span class="property-type">string</span></dt>
+      <dd> Becomes part of the nodes label. </dd>
+    </dl>
+  
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt>
+        <dd> The parametes of the event, specified in the submodel definition. 
+             To generate an assets2036 event, the ISO timestamp is added to the message. </dd>
+     </dl>
+</script>

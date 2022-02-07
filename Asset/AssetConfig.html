@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('AssetConfig', {
+        category: 'config',
+        defaults: {
+            brokerIP: { value: "localhost", required: true },
+            brokerPort: { value: 1883, required: true },
+            assetName: { value: "", required: true },
+            namespace: { value: "arena2036", required: true },
+            submodelURL: { value: "https://" }, // -Komma
+            submodelDef: { value: "", required: true } // -Zeile
+        },
+        label: function () {
+            return this.assetName;
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="AssetConfig">
+    <div class="form-row">
+        <label for="node-config-input-brokerIP"><i class="fa fa-bookmark"></i> BrokerIP</label>
+        <input type="text" id="node-config-input-brokerIP">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-brokerPort"><i class="fa fa-bookmark"></i> BrokerPort</label>
+        <input type="text" id="node-config-input-brokerPort">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-assetName"><i class="fa fa-bookmark"></i> Assetname</label>
+        <input type="text" id="node-config-input-assetName">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-namespace"><i class="fa fa-bookmark"></i> Namespace</label>
+        <input type="text" id="node-config-input-namespace">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-submodelURL"><i class="fa fa-bookmark"></i> SubmodelURL</label>
+        <input type="text" id="node-config-input-submodelURL">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-submodelDef"><i class="fa fa-bookmark"></i> SubmodelDef</label>
+        <input type="text" id="node-config-input-submodelDef">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="AssetConfig">
+    <p>Config for an assets2036 asset</p>
+
+    <h3>Configuration properies</h3>
+    <dl class="message-properties">
+      <dt>BrokerIP<span class="property-type">string</span></dt>
+      <dd> IP of the assets2036 broker. </dd>
+
+      <dt>BrokerPort<span class="property-type">number</span></dt>
+      <dd> Port of the assets2036 broker. </dd>
+
+      <dt>Assetname<span class="property-type">string</span></dt>
+      <dd> The name of the asset to register . </dd>
+
+      <dt>Namespace<span class="property-type">string</span></dt>
+      <dd> The namespace (origin) of the asset. It becomes the assets root topic. </dd>
+
+      <dt>SubmodelURL<span class="property-type">string</span></dt>
+      <dd> The URL of the submodel stored in the submodel pool . </dd>
+
+      <dt>SubmodelDef<span class="property-type">JSON string</span></dt>
+      <dd> The whole submodel as a JSON string. </dd>
+    </dl>
+
+</script>

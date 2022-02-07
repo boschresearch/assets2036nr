@@ -1,0 +1,97 @@
+<script type="text/javascript">
+    RED.nodes.registerType('AssetOperationREQ', {
+        category: 'Tools',
+        color: '#8080cf',
+        defaults: {
+            asset: { value: "", type: "AssetConfig" },
+            operation: { value: "", required: true },
+            name: { value: "" }
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "font-awesome/fa-car",
+        label: function () {
+            var a = RED.nodes.node(this.asset);
+            return a ? `REQ: (${a.assetName}): ${this.operation}` : "OperationREQ";
+        },
+        paletteLabel: "op REQ",
+        oneditprepare: function () {
+            var a = RED.nodes.node(this.asset);
+            if (a) {
+                submodelObj = JSON.parse(a.submodelDef);
+                let select = $('#node-input-operation');
+                select.empty();
+                for (operation in submodelObj.operations) {
+                    select.append($('<option>', {
+                        value: operation,
+                        text: operation
+                    }));
+                }
+
+            }
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="AssetOperationREQ">
+    <div class="form-row">
+        <label for="node-input-asset"><i class="icon-tag"></i>Asset</label>
+        <input type="text" id="node-input-asset" placeholder="Asset">
+    </div>
+    <div class="form-row">
+        <label for="node-input-operation"><i class="icon-tag"></i>Operation</label>
+        <select id="node-input-operation" placeholder="Operation">
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="AssetOperationREQ">
+  <p>Operation request to an assets2036 asset</p>
+  <h3>Node properies</h3>
+  <dl class="message-properties">
+    <dt>Asset<span class="property-type">configuration</span></dt>
+    <dd> A configuration, dercribing the asset. See Configuration properies in the config node. </dd>
+
+    <dt>Operation<span class="property-type">string</span></dt>
+    <dd> One of the operation, specified in the submodel definition. If this field doesn't 
+      match with any operation within the submodel, the node reports a connection 
+      error on its bottom. 
+    </dd>
+
+    <dt>Name<span class="property-type">string</span></dt>
+    <dd> Becomes part of the nodes label. </dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+      <li>Standard output
+          <dl class="message-properties">
+              <dt>payload <span class="property-type">string</span></dt>
+              <dd>The standard output of the node as string. Content see Object output.</dd>
+          </dl>
+      </li>
+      <li>Object output
+          <dl class="message-properties">
+              <dt>payloadobject <span class="property-type">object</span></dt>
+              <dd>The standard output of the node as object.</dd>
+
+              <dt>payloadobject.req_id <span class="property-type">string</span></dt>
+              <dd>The request id of this operation request. It is used within the operation response node. </dd>
+
+              <dt>payloadobject.params <span class="property-type">object</span></dt>
+              <dd>The parameters for the operation, like it is specified in the submodel definition.</dd>
+
+              <dt>payloadobject.config <span class="property-type">object</span></dt>
+              <dd>Configuration info, mostly used within the operation response node. </dd>
+
+              <dt>payloadobject.config.operation <span class="property-type">string</span></dt>
+              <dd>The operation name. It is used within the operation response node. </dd>
+          </dl>
+      </li>
+  </ol>
+
+</script>
